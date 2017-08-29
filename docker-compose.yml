@@ -1,0 +1,29 @@
+version: '3'
+services:
+  mysql:
+    build: ./mysql
+    command: mysqld --user=root --verbose
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: "MySQL_Test"
+      MYSQL_USER: "Manugr21"
+      MYSQL_PASSWORD: "1234"
+      MYSQL_ROOT_PASSWORD: "1234"
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+  postgress:
+    build: ./postgress
+    environment:
+      POSTGRES_PASSSWORD: "12345678"
+      POSTGRES_DB: "Prueba_Postgress"
+    ports:
+      - "5432:5432"
+  php:
+    build: ./php
+    ports:
+      - '80:80'
+    volumes:
+      - ./html:/var/www/itzdata
+    links:
+      - mysql
+      - postgress
